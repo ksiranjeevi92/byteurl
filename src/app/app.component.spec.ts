@@ -14,16 +14,18 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'primecenterhub' title`, () => {
+  it(`should have the 'byteurl' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('primecenterhub');
+    expect(app.title).toEqual('byteurl');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, primecenterhub');
+    expect(compiled.querySelector('h1')?.textContent).toContain(
+      'Hello, byteurl'
+    );
   });
 });

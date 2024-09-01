@@ -1,5 +1,5 @@
 {
-  "name": "primecenterhub",
+  "name": "byteurl",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:primecenterhub": "node dist/primecenterhub/server/server.mjs"
+    "serve:ssr:byteurl": "node dist/byteurl/server/server.mjs"
   },
   "private": true,
   "dependencies": {
