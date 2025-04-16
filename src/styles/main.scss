@@ -1,0 +1,10 @@
+@use "fonts.scss" as font;
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: font.$base-font-family;
+  font-size: font.$base-font-size;
+  line-height: font.$base-line-height;
+}
