@@ -1,0 +1,29 @@
+.header {
+  height: 60px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  left: 0;
+  right: 0;
+  position: fixed;
+  z-index: 1;
+  font-family: inherit;
+  background: #ffffff;
+
+  &__title {
+    font-size: 1.2em;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &__navigation {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+.app-a {
+  margin-left: 1em;
+  margin-right: 0;
+}
