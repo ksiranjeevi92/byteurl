@@ -20,9 +20,7 @@
             "outputPath": "dist/byteurl",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -35,7 +33,10 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            }
           },
           "configurations": {
             "production": {
@@ -79,10 +80,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -117,9 +115,7 @@
             "outputPath": "dist/bootcamp",
             "index": "projects/bootcamp/src/index.html",
             "browser": "projects/bootcamp/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/bootcamp/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -128,9 +124,7 @@
                 "input": "projects/bootcamp/public"
               }
             ],
-            "styles": [
-              "projects/bootcamp/src/styles.scss"
-            ],
+            "styles": ["projects/bootcamp/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -175,10 +169,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "projects/bootcamp/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -187,9 +178,7 @@
                 "input": "projects/bootcamp/public"
               }
             ],
-            "styles": [
-              "projects/bootcamp/src/styles.scss"
-            ],
+            "styles": ["projects/bootcamp/src/styles.scss"],
             "scripts": []
           }
         }

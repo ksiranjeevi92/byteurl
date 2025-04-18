@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { SHARED } from '../../../../shared';
+import { InputComponent, SHARED } from '../../../../shared';
 
 @Component({
   selector: 'app-login',
-  imports: [SHARED],
+  imports: [SHARED, InputComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
