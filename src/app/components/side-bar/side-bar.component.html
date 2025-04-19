@@ -1,0 +1,8 @@
+<main>
+  <ng-content select="[slot-main]"></ng-content>
+</main>
+
+<aside [style.width.px]="currentWidth()">
+  <ng-content select="[slot-aside]"></ng-content>
+  <div cdkDrag (cdkDragMoved)="onDragMove($event)">drag</div>
+</aside>
