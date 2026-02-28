@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 import { ProjectListComponent } from '../project-list/project-list';
 import { ProjectModalComponent } from '../../../../shared/components/project-modal/project-modal';
@@ -10,7 +10,7 @@ import { ProjectDto, CreateProjectRequest } from '../../models/project.model';
 @Component({
   selector: 'app-projects-page',
   standalone: true,
-  imports: [CommonModule, ProjectListComponent, ProjectModalComponent, ConfirmDialogComponent],
+  imports: [ProjectListComponent, ProjectModalComponent, ConfirmDialogComponent],
   templateUrl: './projects-page.html',
   styleUrl: './projects-page.scss'
 })

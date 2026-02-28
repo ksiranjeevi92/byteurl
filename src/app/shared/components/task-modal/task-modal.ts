@@ -1,5 +1,5 @@
 import { Component, input, output, OnInit, OnDestroy, effect } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 
@@ -18,7 +18,7 @@ export interface CreateTaskRequest {
 @Component({
   selector: 'app-task-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './task-modal.html',
   styleUrl: './task-modal.scss'
 })

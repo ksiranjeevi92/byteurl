@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { UserAccountService } from '../../services/user-account.service';
 import { UserProfileService } from '../../../user-profile/services/user-profile.service';
 import { JwtTokenService } from '../../../../shared/services/jwt-token.service';
@@ -10,7 +10,7 @@ import { LoginCredentials } from '../../models/user-account.model';
 @Component({
   selector: 'app-user-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './user-login.html',
   styleUrl: './user-login.scss'
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { UserProfileService } from '../../services/user-profile.service';
 import { JwtTokenService } from '../../../../shared/services/jwt-token.service';
 import { UserProfile, CreateUserProfileRequest, UpdateUserProfileRequest } from '../../models/user-profile.model';
@@ -9,7 +9,7 @@ import { UserProfile, CreateUserProfileRequest, UpdateUserProfileRequest } from 
 @Component({
   selector: 'app-profile-complete',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './profile-complete.html',
   styleUrl: './profile-complete.scss'
 })

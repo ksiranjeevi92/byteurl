@@ -1,11 +1,11 @@
 import { Component, input, output, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ProjectDto } from '../../models/project.model';
 
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './project-list.html',
   styleUrl: './project-list.scss'
 })

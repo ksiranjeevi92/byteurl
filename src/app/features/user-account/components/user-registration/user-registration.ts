@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { UserAccountService } from '../../services/user-account.service';
 import { UserAccountRequest } from '../../models/user-account.model';
 
 @Component({
   selector: 'app-user-registration',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './user-registration.html',
   styleUrl: './user-registration.scss'
 })
