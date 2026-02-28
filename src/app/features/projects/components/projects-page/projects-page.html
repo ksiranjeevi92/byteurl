@@ -1,0 +1,38 @@
+<div class="projects-page-layout">
+  <main class="projects-page-content">
+    <div class="content-container">
+      <!-- Project List Section -->
+      <app-project-list
+        [projects]="projects"
+        [isLoading]="isLoading"
+        [errorMessage]="errorMessage"
+        (createProject)="onCreateProject()"
+        (viewProject)="onViewProject($event)"
+        (deleteProject)="onDeleteProject($event)"
+        (retry)="onRetry()"
+      ></app-project-list>
+    </div>
+  </main>
+
+  <!-- Project Creation Modal -->
+  @if (showModal) {
+    <app-project-modal
+      (projectSubmit)="onProjectSubmit($event)"
+      (modalClose)="onModalClose()"
+    ></app-project-modal>
+  }
+
+  <!-- Delete Confirmation Dialog -->
+  @if (showDeleteConfirm) {
+    <app-confirm-dialog
+      [title]="'Delete Project'"
+      [message]="getDeleteConfirmMessage()"
+      [confirmText]="'Delete'"
+      [cancelText]="'Cancel'"
+      [confirmButtonClass]="'btn-danger'"
+      [isConfirming]="isDeletingProject"
+      (confirm)="onConfirmDelete()"
+      (cancel)="onCancelDelete()"
+    ></app-confirm-dialog>
+  }
+</div>

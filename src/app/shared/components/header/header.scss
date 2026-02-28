@@ -1,0 +1,187 @@
+.app-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo {
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+}
+
+.nav-menu {
+  display: flex;
+  gap: 24px;
+
+  .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    background: none;
+    border: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &.active {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .profile-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    .profile-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 600;
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    &:hover .profile-avatar {
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .user-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+
+    .user-email {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+    }
+
+    .token-info {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.7);
+      font-style: italic;
+    }
+  }
+
+  .logout-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .logout-icon {
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    padding: 0 16px;
+    height: 56px;
+  }
+
+  .header-left {
+    gap: 20px;
+  }
+
+  .nav-menu {
+    display: none; // Hide navigation on mobile for now
+  }
+
+  .logo h1 {
+    font-size: 20px;
+  }
+
+  .user-info {
+    gap: 8px;
+
+    .profile-btn {
+      .profile-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+      }
+    }
+
+    .user-details {
+      display: none; // Hide user details on small screens
+    }
+
+    .logout-btn {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+  }
+}

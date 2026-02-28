@@ -1,0 +1,27 @@
+.projects-page-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+}
+
+.projects-page-content {
+  flex: 1;
+  padding: 20px 0;
+}
+
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .projects-page-content {
+    padding: 16px 0;
+  }
+
+  .content-container {
+    padding: 0 16px;
+  }
+}

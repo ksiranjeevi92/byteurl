@@ -1,0 +1,270 @@
+<!-- Loading State -->
+@if (isLoading) {
+  <div class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading project details...</p>
+  </div>
+}
+
+<!-- Error State -->
+@if (errorMessage && !isLoading) {
+  <div class="error-container">
+    <div class="error-icon">⚠️</div>
+    <p>{{ errorMessage }}</p>
+    <div class="error-actions">
+      <button class="btn-secondary" (click)="goBack()">Back to Projects</button>
+      <button class="btn-primary" (click)="ngOnInit()">Try Again</button>
+    </div>
+  </div>
+}
+
+<!-- Project Detail -->
+@if (project && !isLoading) {
+  <div class="project-detail-container">
+    <!-- Compact Header with Project Info -->
+    <div class="project-header-compact">
+      <button class="back-btn" (click)="goBack()">
+        <span class="back-icon">←</span>
+        Back to Projects
+      </button>
+
+      <div class="project-summary-card">
+        <div class="project-avatar-large">
+          {{ project.name.charAt(0).toUpperCase() }}
+        </div>
+
+        <div class="project-main-info">
+          <div class="project-title-section">
+            <h1 class="project-title" (click)="startEditingName()">
+              {{ project.name }}
+              <span class="edit-indicator">✏️</span>
+            </h1>
+            <span class="project-id">ID: {{ project.id.substring(0, 8) }}...</span>
+          </div>
+
+          <div class="project-description-section">
+            <p class="project-description" (click)="startEditingDescription()">
+              {{ project.description }}
+              <span class="edit-indicator">✏️</span>
+            </p>
+          </div>
+
+          <div class="project-meta-info">
+            <div class="meta-item">
+              <span class="meta-icon">👤</span>
+              <span class="meta-label">Owner:</span>
+              <span class="meta-value">{{ project.owner }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-icon">👥</span>
+              <span class="meta-label">Members:</span>
+              <span class="meta-value">{{ project.members.length }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-icon">📋</span>
+              <span class="meta-label">Tasks:</span>
+              <span class="meta-value">{{ project.tasks.length }}</span>
+            </div>
+            @if (project.createdAt) {
+              <div class="meta-item">
+                <span class="meta-icon">🕐</span>
+                <span class="meta-label">Created:</span>
+                <span class="meta-value">{{ project.createdAt | timeAgo }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tasks Section - Now Higher Up -->
+    <div class="tasks-section">
+      <div class="section-header-modern">
+        <div class="section-title-group">
+          <h2>Tasks</h2>
+          <span class="task-count-badge">{{ project.tasks.length }}</span>
+        </div>
+        <button
+          class="add-task-btn"
+          (click)="showAddTaskModal()"
+          [disabled]="isEditingName || isEditingDescription"
+        >
+          <span class="btn-icon">➕</span>
+          Add Task
+        </button>
+      </div>
+
+      <div class="tasks-content">
+        @if (project.tasks.length === 0) {
+          <div class="empty-tasks-modern">
+            <div class="empty-illustration">📋</div>
+            <h3>No tasks yet</h3>
+            <p>Start by adding your first task to this project</p>
+            <button class="create-first-task-btn" (click)="showAddTaskModal()">
+              Create First Task
+            </button>
+          </div>
+        }
+
+        @if (project.tasks.length > 0) {
+          <div class="tasks-grid">
+            @for (task of project.tasks; track task.id) {
+              <div class="task-card-modern">
+                <div class="task-status-bar" [class]="getTaskStatusClass(task.status)"></div>
+
+                <div class="task-content">
+                  <div class="task-header">
+                    <div class="task-status-badge" [class]="getTaskStatusClass(task.status)">
+                      <span class="status-icon">{{ getTaskStatusIcon(task.status) }}</span>
+                      <span class="status-text">{{ task.status }}</span>
+                    </div>
+                  </div>
+
+                  <h4 class="task-title">{{ task.title }}</h4>
+                  @if (task.description) {
+                    <p class="task-description">{{ task.description }}</p>
+                  }
+
+                  <div class="task-footer">
+                    <div class="task-people">
+                      <div class="person-info">
+                        <span class="person-label">Owner:</span>
+                        <span class="person-value">{{ task.owner || task.ownerId || 'Unknown' }}</span>
+                      </div>
+                      <div class="person-info">
+                        <span class="person-label">Assigned:</span>
+                        <span class="person-value">{{ task.assignee || task.assigneeId || 'Unassigned' }}</span>
+                      </div>
+                    </div>
+                    @if (task.createdAt) {
+                      <div class="task-date">
+                        {{ task.createdAt | date:'MMM d, y' }}
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Edit Name Modal -->
+    @if (isEditingName) {
+      <div class="modal-backdrop" (click)="cancelEditingName()">
+        <div class="edit-modal" (click)="$event.stopPropagation()">
+          <div class="modal-header">
+            <h3>Edit Project Name</h3>
+            <button class="close-btn" (click)="cancelEditingName()">×</button>
+          </div>
+          <form [formGroup]="nameForm" (ngSubmit)="saveName()">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="name">Project Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  formControlName="name"
+                  class="form-control"
+                  [class.is-invalid]="nameForm.get('name')?.invalid && nameForm.get('name')?.touched"
+                  placeholder="Enter project name"
+                  autofocus
+                />
+                @if (getFieldError(nameForm, 'name')) {
+                  <div class="invalid-feedback">
+                    {{ getFieldError(nameForm, 'name') }}
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn-secondary"
+                (click)="cancelEditingName()"
+                [disabled]="isSavingName"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn-primary"
+                [disabled]="nameForm.invalid || isSavingName"
+              >
+                @if (isSavingName) {
+                  <span class="spinner"></span>
+                }
+                {{ isSavingName ? 'Saving...' : 'Save Changes' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+
+    <!-- Edit Description Modal -->
+    @if (isEditingDescription) {
+      <div class="modal-backdrop" (click)="cancelEditingDescription()">
+        <div class="edit-modal" (click)="$event.stopPropagation()">
+          <div class="modal-header">
+            <h3>Edit Project Description</h3>
+            <button class="close-btn" (click)="cancelEditingDescription()">×</button>
+          </div>
+          <form [formGroup]="descriptionForm" (ngSubmit)="saveDescription()">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="description">Project Description</label>
+                <textarea
+                  id="description"
+                  formControlName="description"
+                  class="form-control"
+                  [class.is-invalid]="descriptionForm.get('description')?.invalid && descriptionForm.get('description')?.touched"
+                  placeholder="Enter project description"
+                  rows="4"
+                  autofocus
+                ></textarea>
+                @if (getFieldError(descriptionForm, 'description')) {
+                  <div class="invalid-feedback">
+                    {{ getFieldError(descriptionForm, 'description') }}
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn-secondary"
+                (click)="cancelEditingDescription()"
+                [disabled]="isSavingDescription"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn-primary"
+                [disabled]="descriptionForm.invalid || isSavingDescription"
+              >
+                @if (isSavingDescription) {
+                  <span class="spinner"></span>
+                }
+                {{ isSavingDescription ? 'Saving...' : 'Save Changes' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+
+    <!-- Task Creation Modal -->
+    @if (showTaskModal) {
+      <app-task-modal
+        [searchResults]="userSearchResults"
+        [isSearching]="isSearchingUsers"
+        (taskSubmit)="onTaskSubmit($event)"
+        (modalClose)="onTaskModalClose()"
+        (searchUsers)="onSearchUsers($event)"
+      ></app-task-modal>
+    }
+  </div>
+}

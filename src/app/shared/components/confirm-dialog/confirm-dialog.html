@@ -1,0 +1,44 @@
+<!-- Modal Backdrop -->
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <!-- Modal Content -->
+  <div class="modal-content confirm-modal">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h3 class="modal-title">{{ title() }}</h3>
+      <button type="button" class="close-button" (click)="onCancel()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <div class="confirm-message">
+        {{ message() }}
+      </div>
+    </div>
+
+    <!-- Modal Footer with Buttons -->
+    <div class="modal-footer">
+      <button 
+        type="button" 
+        class="btn btn-secondary" 
+        (click)="onCancel()"
+        [disabled]="isConfirming()"
+      >
+        {{ cancelText() }}
+      </button>
+      <button 
+        type="button" 
+        class="btn" 
+        [ngClass]="confirmButtonClass()"
+        (click)="onConfirm()"
+        [disabled]="isConfirming()"
+      >
+        @if (isConfirming()) {
+          <span class="spinner"></span>
+        }
+        {{ isConfirming() ? 'Please wait...' : confirmText() }}
+      </button>
+    </div>
+  </div>
+</div>

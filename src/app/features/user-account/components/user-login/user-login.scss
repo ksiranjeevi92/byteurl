@@ -1,0 +1,346 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  position: relative;
+  
+  // Add some subtle pattern overlay
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+}
+
+.login-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  padding: 48px;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.brand-section {
+  margin-bottom: 32px;
+  
+  .operis-logo {
+    h1 {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 36px;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: -1px;
+    }
+    
+    .logo-tagline {
+      color: #6c757d;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.signin-section {
+  h2 {
+    color: #2c3e50;
+    margin-bottom: 12px;
+    font-weight: 600;
+    font-size: 28px;
+  }
+
+  p {
+    color: #6c757d;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+}
+
+.login-form {
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+      }
+
+      &.is-invalid {
+        border-color: #dc3545;
+      }
+    }
+
+    .invalid-feedback {
+      color: #dc3545;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+  }
+
+  .error-message {
+    margin-bottom: 20px;
+
+    .alert {
+      padding: 12px 16px;
+      border-radius: 4px;
+      font-size: 14px;
+
+      &.alert-danger {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+      }
+    }
+  }
+
+  .btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &.btn-primary {
+      background-color: #007bff;
+      color: white;
+
+      &:hover:not(:disabled) {
+        background-color: #0056b3;
+      }
+
+      &:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+      }
+    }
+
+    &.btn-full-width {
+      width: 100%;
+    }
+
+    &.btn-link {
+      background: none;
+      border: none;
+      color: #007bff;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: inherit;
+      padding: 0;
+
+      &:hover {
+        color: #0056b3;
+      }
+    }
+  }
+
+  .loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 8px;
+  }
+
+  .form-footer {
+    text-align: center;
+    margin-top: 24px;
+    
+    p {
+      margin: 0 0 12px 0;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .create-account-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        text-decoration: none;
+        color: white;
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      .link-icon {
+        font-size: 16px;
+        opacity: 0.9;
+      }
+
+      .link-arrow {
+        font-size: 14px;
+        transition: transform 0.3s ease;
+        opacity: 0.8;
+      }
+
+      &:hover .link-arrow {
+        transform: translateX(3px);
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.platform-features {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e9ecef;
+  
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      
+      .feature-icon {
+        font-size: 16px;
+      }
+      
+      .feature-text {
+        font-size: 12px;
+        color: #6c757d;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// Mobile responsive styles
+@media (max-width: 768px) {
+  .login-container {
+    padding: 16px;
+  }
+  
+  .login-card {
+    padding: 32px 24px;
+    max-width: 100%;
+  }
+  
+  .brand-section {
+    .operis-logo {
+      h1 {
+        font-size: 28px;
+      }
+      
+      .logo-tagline {
+        font-size: 12px;
+      }
+    }
+  }
+  
+  .signin-section {
+    h2 {
+      font-size: 24px;
+    }
+    
+    p {
+      font-size: 14px;
+    }
+  }
+
+  .form-footer {
+    .create-account-link {
+      padding: 10px 16px;
+      font-size: 13px;
+      
+      .link-icon {
+        font-size: 14px;
+      }
+      
+      .link-arrow {
+        font-size: 12px;
+      }
+    }
+  }
+  
+  .platform-features {
+    .features-grid {
+      .feature-item {
+        padding: 6px;
+        
+        .feature-text {
+          font-size: 11px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 24px 20px;
+  }
+  
+  .platform-features {
+    .features-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+}

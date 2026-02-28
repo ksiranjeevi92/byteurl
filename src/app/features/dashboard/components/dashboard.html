@@ -1,0 +1,207 @@
+<div class="dashboard-layout">
+  <main class="dashboard-content">
+    <div class="content-container">
+
+      <!-- Welcome Hero Section -->
+      <div class="hero-section">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1 class="hero-title">Welcome to Operis</h1>
+            <p class="hero-subtitle">Your central hub for project management and team collaboration</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Dashboard -->
+      <div class="stats-section">
+        <h2 class="section-title">Dashboard Overview</h2>
+
+        <div class="stats-grid">
+          <!-- Projects Stats -->
+          <div class="stat-card projects-card">
+            <div class="stat-header">
+              <div class="stat-icon">📁</div>
+              <div class="stat-info">
+                <h3 class="stat-title">Total Projects</h3>
+                <div class="stat-value">{{ dashboardStats.totalProjects }}</div>
+              </div>
+            </div>
+            <div class="stat-footer">
+              <span class="stat-label">Active projects</span>
+            </div>
+          </div>
+
+          <!-- Tasks Stats -->
+          <div class="stat-card tasks-card">
+            <div class="stat-header">
+              <div class="stat-icon">📝</div>
+              <div class="stat-info">
+                <h3 class="stat-title">Total Tasks</h3>
+                <div class="stat-value">{{ dashboardStats.totalTasks }}</div>
+              </div>
+            </div>
+            <div class="stat-footer">
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="getCompletionPercentage()"></div>
+              </div>
+              <span class="stat-label">{{ getCompletionPercentage() }}% completed</span>
+            </div>
+          </div>
+
+          <!-- Active Tasks Stats -->
+          <div class="stat-card active-card">
+            <div class="stat-header">
+              <div class="stat-icon">⚡</div>
+              <div class="stat-info">
+                <h3 class="stat-title">Active Tasks</h3>
+                <div class="stat-value">{{ dashboardStats.activeTasks }}</div>
+              </div>
+            </div>
+            <div class="stat-footer">
+              <span class="stat-label">In progress & pending</span>
+            </div>
+          </div>
+
+          <!-- Team Members Stats -->
+          <div class="stat-card members-card">
+            <div class="stat-header">
+              <div class="stat-icon">👥</div>
+              <div class="stat-info">
+                <h3 class="stat-title">Team Members</h3>
+                <div class="stat-value">{{ dashboardStats.totalMembers }}</div>
+              </div>
+            </div>
+            <div class="stat-footer">
+              <span class="stat-label">Across all projects</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Task Status Breakdown -->
+      @if (dashboardStats.totalTasks > 0) {
+        <div class="breakdown-section">
+          <h2 class="section-title">Task Status Overview</h2>
+
+          <div class="breakdown-grid">
+            <div class="breakdown-card todo-breakdown">
+              <div class="breakdown-header">
+                <span class="breakdown-icon">📋</span>
+                <div class="breakdown-info">
+                  <h4>To Do</h4>
+                  <div class="breakdown-value">{{ taskStatusBreakdown.todo }}</div>
+                </div>
+              </div>
+              <div class="breakdown-chart">
+                <div class="chart-bar" [style.width.%]="getTaskStatusPercentage('todo')"></div>
+              </div>
+            </div>
+
+            <div class="breakdown-card progress-breakdown">
+              <div class="breakdown-header">
+                <span class="breakdown-icon">🔄</span>
+                <div class="breakdown-info">
+                  <h4>In Progress</h4>
+                  <div class="breakdown-value">{{ taskStatusBreakdown.inProgress }}</div>
+                </div>
+              </div>
+              <div class="breakdown-chart">
+                <div class="chart-bar" [style.width.%]="getTaskStatusPercentage('inProgress')"></div>
+              </div>
+            </div>
+
+            <div class="breakdown-card done-breakdown">
+              <div class="breakdown-header">
+                <span class="breakdown-icon">✅</span>
+                <div class="breakdown-info">
+                  <h4>Completed</h4>
+                  <div class="breakdown-value">{{ taskStatusBreakdown.done }}</div>
+                </div>
+              </div>
+              <div class="breakdown-chart">
+                <div class="chart-bar" [style.width.%]="getTaskStatusPercentage('done')"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+
+      <!-- Recent Projects Section -->
+      <div class="recent-section">
+        <div class="section-header">
+          <h2 class="section-title">Recent Projects</h2>
+          <button class="view-all-btn" routerLink="/projects">View All</button>
+        </div>
+
+        @if (loading) {
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Loading your projects...</p>
+          </div>
+        }
+
+        @if (error) {
+          <div class="error-state">
+            <div class="error-icon">⚠️</div>
+            <p>{{ error }}</p>
+            <button class="retry-btn" (click)="loadMyProjects()">Try Again</button>
+          </div>
+        }
+
+        @if (!loading && !error && myProjects.length === 0) {
+          <div class="empty-state">
+            <div class="empty-icon">📂</div>
+            <h3>No Projects Yet</h3>
+            <p>Create your first project to get started with task management</p>
+            <button class="create-btn" routerLink="/projects">Create Your First Project</button>
+          </div>
+        }
+
+        @if (!loading && !error && myProjects.length > 0) {
+          <div class="recent-projects-grid">
+            @for (project of dashboardStats.recentProjects; track project.id) {
+              <div
+                class="recent-project-card"
+                [routerLink]="['/projects', project.id]"
+              >
+                <div class="project-header">
+                  <div class="project-avatar">
+                    {{ getProjectInitials(project.name) }}
+                  </div>
+                  <div class="project-info">
+                    <h4 class="project-name">{{ project.name }}</h4>
+                    <p class="project-description">{{ project.description || 'No description' }}</p>
+                  </div>
+                </div>
+
+                <div class="project-stats">
+                  <div class="project-stat">
+                    <span class="stat-icon">📝</span>
+                    <span class="stat-text">{{ project.tasks.length || 0 }} tasks</span>
+                  </div>
+                  <div class="project-stat">
+                    <span class="stat-icon">👥</span>
+                    <span class="stat-text">{{ project.members.length || 0 }} members</span>
+                  </div>
+                </div>
+
+                <div class="project-arrow">→</div>
+              </div>
+            }
+
+            @if (myProjects.length > 3) {
+              <div class="more-projects-card">
+                <div class="more-content">
+                  <h4>{{ myProjects.length - 3 }} More Projects</h4>
+                  <p>Click to view all your projects</p>
+                  <button class="more-btn" routerLink="/projects">View All Projects</button>
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+    </div>
+  </main>
+</div>

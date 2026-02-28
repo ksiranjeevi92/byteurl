@@ -1,0 +1,89 @@
+<div class="project-list-container">
+  <div class="project-list-header">
+    <h2>Projects</h2>
+    <div class="header-actions">
+      <button class="create-btn" (click)="onCreateProject()" [disabled]="isLoading()">
+        <span class="create-icon">➕</span>
+        Create Project
+      </button>
+      <button class="refresh-btn" (click)="onRetry()" [disabled]="isLoading()">
+        <span class="refresh-icon" [class.spinning]="isLoading()">🔄</span>
+        Refresh
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading projects...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (errorMessage()) {
+    <div class="error-container">
+      <div class="error-icon">⚠️</div>
+      <p>{{ errorMessage() }}</p>
+      <button class="retry-btn" (click)="onRetry()">Try Again</button>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @if (!isLoading() && !errorMessage() && enrichedProjects().length === 0) {
+    <div class="empty-container">
+      <div class="empty-icon">📂</div>
+      <h3>No Projects Yet</h3>
+      <p>You don't have any projects yet. Create your first project to get started!</p>
+      <button class="create-btn primary" (click)="onCreateProject()">
+        <span class="create-icon">➕</span>
+        Create Your First Project
+      </button>
+    </div>
+  }
+
+  <!-- Project List -->
+  @if (!isLoading() && !errorMessage() && enrichedProjects().length > 0) {
+    <div class="projects-grid">
+      @for (project of enrichedProjects(); track project.id) {
+        <div class="project-card">
+          <div class="project-card-header">
+            <div class="project-avatar">
+              {{ project.initials }}
+            </div>
+            <div class="project-info">
+              <h3 class="project-name">{{ project.name }}</h3>
+              <p class="project-owner">Owner: {{ project.owner }}</p>
+            </div>
+          </div>
+
+          <div class="project-card-body">
+            <p class="project-description" [title]="project.description">
+              {{ project.description }}
+            </p>
+          </div>
+
+          <div class="project-card-footer">
+            <div class="project-stats">
+              <div class="stat-item">
+                <span class="stat-icon">✅</span>
+                <span class="stat-value">{{ project.taskCount }}</span>
+                <span class="stat-label">Tasks</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-icon">👥</span>
+                <span class="stat-value">{{ project.memberCount }}</span>
+                <span class="stat-label">Members</span>
+              </div>
+            </div>
+            <div class="project-actions">
+              <button class="action-btn primary" (click)="onViewProject(project)">View</button>
+              <button class="action-btn danger" (click)="onDeleteProject(project)">Delete</button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

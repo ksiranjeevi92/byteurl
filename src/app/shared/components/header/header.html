@@ -1,0 +1,51 @@
+<header class="app-header">
+  <div class="header-container">
+    <div class="header-left">
+      <div class="logo">
+        <h1>Operis</h1>
+      </div>
+      <nav class="nav-menu">
+        <button
+          class="nav-link"
+          [class.active]="isRouteActive('/dashboard')"
+          (click)="navigateTo('/dashboard')">
+          Dashboard
+        </button>
+        <button
+          class="nav-link"
+          [class.active]="isRouteActive('/projects')"
+          (click)="navigateTo('/projects')">
+          Projects
+        </button>
+        <button
+          class="nav-link"
+          [class.active]="isRouteActive('/user-profile')"
+          (click)="navigateTo('/user-profile')">
+          Profile
+        </button>
+      </nav>
+    </div>
+
+    <div class="header-right">
+      <div class="user-info">
+        <button class="profile-btn" (click)="navigateTo('/user-profile')" title="Edit Profile">
+          <div class="profile-avatar">
+            {{ emailInitial() }}
+          </div>
+        </button>
+        <div class="user-details">
+          <span class="user-email">{{ displayEmail() }}</span>
+          @if (tokenTimeRemaining() !== null && tokenTimeRemaining()! < 30) {
+            <span class="token-info">
+              Token expires in {{ tokenTimeRemaining() }} min
+            </span>
+          }
+        </div>
+        <button class="logout-btn" (click)="onLogout()">
+          <span class="logout-icon">🚪</span>
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

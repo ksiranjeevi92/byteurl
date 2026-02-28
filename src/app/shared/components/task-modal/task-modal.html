@@ -1,0 +1,150 @@
+<!-- Modal Backdrop -->
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <!-- Modal Content -->
+  <div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h3 class="modal-title">Add New Task</h3>
+      <button type="button" class="close-button" (click)="onClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <form [formGroup]="createTaskForm" (ngSubmit)="onSubmit()">
+        <!-- Task Title Field -->
+        <div class="form-group">
+          <label for="title" class="form-label">Task Title *</label>
+          <input
+            type="text"
+            id="title"
+            formControlName="title"
+            class="form-control"
+            [class.is-invalid]="createTaskForm.get('title')?.invalid && createTaskForm.get('title')?.touched"
+            placeholder="Enter task title"
+          />
+          @if (getFieldError('title')) {
+            <div class="invalid-feedback">
+              {{ getFieldError('title') }}
+            </div>
+          }
+        </div>
+
+        <!-- Task Description Field -->
+        <div class="form-group">
+          <label for="description" class="form-label">Description *</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            class="form-control"
+            [class.is-invalid]="createTaskForm.get('description')?.invalid && createTaskForm.get('description')?.touched"
+            placeholder="Enter task description"
+            rows="4"
+          ></textarea>
+          @if (getFieldError('description')) {
+            <div class="invalid-feedback">
+              {{ getFieldError('description') }}
+            </div>
+          }
+        </div>
+
+        <!-- Assigned To Email Field with Search -->
+        <div class="form-group">
+          <label for="userSearch" class="form-label">Assign To *</label>
+          <div class="search-container">
+            <div class="search-input-wrapper">
+              <input
+                type="text"
+                id="userSearch"
+                formControlName="userSearch"
+                class="form-control search-input"
+                [class.is-invalid]="createTaskForm.get('userSearch')?.invalid && createTaskForm.get('userSearch')?.touched && !selectedUser"
+                placeholder="Search for user by name or email..."
+                (input)="onSearchInput($event)"
+                autocomplete="off"
+              />
+              <div class="search-icons">
+                @if (isSearching()) {
+                  <span class="loading-icon">🔄</span>
+                }
+                @if (selectedUser) {
+                  <span class="selected-icon">✅</span>
+                  <button
+                    type="button"
+                    class="clear-button"
+                    (click)="clearSelection()"
+                  >
+                    ×
+                  </button>
+                }
+              </div>
+            </div>
+
+            <!-- Search Results Dropdown -->
+            @if (showSearchResults) {
+              <div class="search-results">
+                @for (user of searchResults(); track user.email) {
+                  <div
+                    class="search-result-item"
+                    (click)="selectUser(user)"
+                  >
+                    <div class="user-info">
+                      <div class="user-name">{{ user.firstName }} {{ user.lastName }}</div>
+                      <div class="user-email">{{ user.email }}</div>
+                    </div>
+                  </div>
+                }
+                @if (searchResults().length === 0) {
+                  <div class="no-results">
+                    No users found
+                  </div>
+                }
+              </div>
+            }
+          </div>
+
+          @if (getFieldError('userSearch') || (createTaskForm.get('userSearch')?.touched && !selectedUser)) {
+            <div class="invalid-feedback">
+              {{ getFieldError('userSearch') || 'Please select a user from the search results' }}
+            </div>
+          }
+        </div>
+
+        <!-- Selected User Display -->
+        @if (selectedUser) {
+          <div class="selected-user">
+            <div class="selected-user-info">
+              <span class="selected-label">Assigned to:</span>
+              <span class="selected-details">
+                {{ selectedUser.firstName }} {{ selectedUser.lastName }} ({{ selectedUser.email }})
+              </span>
+            </div>
+          </div>
+        }
+
+        <!-- Modal Footer with Buttons -->
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="onClose()"
+            [disabled]="isSubmitting"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="createTaskForm.invalid || !selectedUser || isSubmitting"
+          >
+            @if (isSubmitting) {
+              <span class="spinner"></span>
+            }
+            {{ isSubmitting ? 'Adding Task...' : 'Add Task' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

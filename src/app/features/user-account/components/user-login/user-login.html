@@ -1,0 +1,101 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="brand-section">
+        <div class="operis-logo">
+          <h1>Operis</h1>
+          <div class="logo-tagline">Project Management Platform</div>
+        </div>
+      </div>
+      <div class="signin-section">
+        <h2>Sign In</h2>
+        <p>Welcome back! Please sign in to your account to continue.</p>
+      </div>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          [class.is-invalid]="isFieldInvalid('email')"
+          placeholder="Enter your email address"
+        />
+        @if (isFieldInvalid('email')) {
+          <div class="invalid-feedback">
+            {{ getErrorMessage('email') }}
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          [class.is-invalid]="isFieldInvalid('password')"
+          placeholder="Enter your password"
+        />
+        @if (isFieldInvalid('password')) {
+          <div class="invalid-feedback">
+            {{ getErrorMessage('password') }}
+          </div>
+        }
+      </div>
+
+      @if (errorMessage) {
+        <div class="error-message">
+          <div class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+        </div>
+      }
+
+      <button
+        type="submit"
+        class="btn btn-primary btn-full-width"
+        [disabled]="loginForm.invalid || isLoading"
+      >
+        @if (isLoading) {
+          <span class="loading-spinner"></span>
+        }
+        {{ isLoading ? 'Signing In...' : 'Sign In' }}
+      </button>
+
+      <div class="form-footer">
+        <p>Don't have an account?</p>
+        <a class="create-account-link" (click)="navigateToRegister()">
+          <span class="link-icon">✨</span>
+          Create your account
+          <span class="link-arrow">→</span>
+        </a>
+      </div>
+    </form>
+
+    <div class="platform-features">
+      <div class="features-grid">
+        <div class="feature-item">
+          <span class="feature-icon">📋</span>
+          <span class="feature-text">Project Management</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">👥</span>
+          <span class="feature-text">Team Collaboration</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">📊</span>
+          <span class="feature-text">Analytics & Reports</span>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon">⚡</span>
+          <span class="feature-text">Fast & Reliable</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

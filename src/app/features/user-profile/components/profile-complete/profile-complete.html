@@ -1,0 +1,70 @@
+<div class="profile-complete-container">
+  <div class="profile-complete-card">
+    <h2>Complete Your Profile</h2>
+    <p class="subtitle">Please provide your first and last name to access the dashboard.</p>
+
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+      <div class="form-group">
+        <label for="firstName">First Name *</label>
+        <input
+          id="firstName"
+          type="text"
+          formControlName="firstName"
+          class="form-control"
+          [class.error]="isFieldInvalid('firstName')"
+          placeholder="Enter your first name"
+        />
+@if (isFieldInvalid('firstName')) {
+          <div class="error-message">
+            {{ getErrorMessage('firstName') }}
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last Name *</label>
+        <input
+          id="lastName"
+          type="text"
+          formControlName="lastName"
+          class="form-control"
+          [class.error]="isFieldInvalid('lastName')"
+          placeholder="Enter your last name"
+        />
+@if (isFieldInvalid('lastName')) {
+          <div class="error-message">
+            {{ getErrorMessage('lastName') }}
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="birthDate">Birth Date (Optional)</label>
+        <input
+          id="birthDate"
+          type="date"
+          formControlName="birthDate"
+          class="form-control"
+        />
+      </div>
+
+@if (errorMessage) {
+        <div class="error-message">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="isLoading"
+      >
+@if (isLoading) {
+          <span>Saving...</span>
+        } @else {
+          <span>{{ existingProfile ? 'Update Profile' : 'Create Profile' }}</span>
+        }
+      </button>
+    </form>
+  </div>
+</div>

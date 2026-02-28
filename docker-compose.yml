@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  byteurl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: byteurl
+    ports:
+      - "4200:80"
+    restart: unless-stopped
+    # For development with backend
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
+    networks:
+      - operis-network
+
+networks:
+  operis-network:
+    driver: bridge

@@ -1,0 +1,76 @@
+<!-- Modal Backdrop -->
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <!-- Modal Content -->
+  <div class="modal-content">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <h3 class="modal-title">Create New Project</h3>
+      <button type="button" class="close-button" (click)="onClose()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body">
+      <form [formGroup]="createProjectForm" (ngSubmit)="onSubmit()">
+        <!-- Project Name Field -->
+        <div class="form-group">
+          <label for="name" class="form-label">Project Name *</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+            [class.is-invalid]="createProjectForm.get('name')?.invalid && createProjectForm.get('name')?.touched"
+            placeholder="Enter project name"
+          />
+          @if (getFieldError('name')) {
+            <div class="invalid-feedback">
+              {{ getFieldError('name') }}
+            </div>
+          }
+        </div>
+
+        <!-- Project Description Field -->
+        <div class="form-group">
+          <label for="description" class="form-label">Description *</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            class="form-control"
+            [class.is-invalid]="createProjectForm.get('description')?.invalid && createProjectForm.get('description')?.touched"
+            placeholder="Enter project description"
+            rows="4"
+          ></textarea>
+          @if (getFieldError('description')) {
+            <div class="invalid-feedback">
+              {{ getFieldError('description') }}
+            </div>
+          }
+        </div>
+
+        <!-- Modal Footer with Buttons -->
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="onClose()"
+            [disabled]="isSubmitting"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="createProjectForm.invalid || isSubmitting"
+          >
+            @if (isSubmitting) {
+              <span class="spinner"></span>
+            }
+            {{ isSubmitting ? 'Creating...' : 'Create Project' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
